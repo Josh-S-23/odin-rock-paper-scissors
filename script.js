@@ -1,3 +1,25 @@
+const computerSelection = getComputerChoice();
+const container = document.querySelector('.container');
+const rock = document.querySelector('#rock');
+const paper = document.querySelector('#paper');
+const scissors = document.querySelector('#scissors');
+const results = document.querySelector('#results');
+const score = document.querySelector('#score');
+const finalWinner = document.querySelector('#finalWinner');
+const title = document.querySelector('#title');
+const gameDesc = document.querySelector('#gameDesc');
+
+title.setAttribute('style', 'color: purple; text-align: center; margin-top: 70px; margin-bottom: 50px; font-size: 50px; font-family: sans-serif; font-weight: bolder;');
+gameDesc.setAttribute('style', 'color: purple; text-align: center; font-size: 20px; font-family: sans-serif;');
+container.setAttribute('style', 'text-align: center; margin-top: 50px;');
+rock.setAttribute('style', 'min-width: 100px; min-height: 30px; color: white; background-color: purple; margin-right: 15px; border-radius: 5px');
+paper.setAttribute('style', 'min-width: 100px; min-height: 30px; color: white; background-color: purple; margin-right: 15px; border-radius: 5px');
+scissors.setAttribute('style', 'min-width: 100px; min-height: 30px; color: white; background-color: purple; border-radius: 5px');
+results.setAttribute('style', 'text-align: center; margin-top: 50px; font-family: sans-serif; color: purple');
+score.setAttribute('style', 'text-align: center; margin-top: 15px; font-family: sans-serif; color: purple');
+finalWinner.setAttribute('style', 'text-align: center; margin-top: 15px; font-family: sans-serif; color: purple')
+
+
 function getComputerChoice() {
 
     let computerChoice = Math.floor(Math.random() * 3 + 1);
@@ -20,39 +42,39 @@ function playRound(playerSelection, computerSelection) {
 
     if (playerSelection == "rock" && computerSelection == "Paper") {
 
-        return "You Lose! Paper beats Rock";
+        results.textContent = "You Lose! Paper beats Rock";
     }
     if (playerSelection == "paper" && computerSelection == "Scissors") {
 
-        return "You Lose! Scissors beats Paper";
+        results.textContent = "You Lose! Scissors beats Paper";
     }
     if (playerSelection == "scissors" && computerSelection == "Rock") {
 
-        return "You Lose! Rock beats Scissors";
+        results.textContent = "You Lose! Rock beats Scissors";
     }
     if (playerSelection == "rock" && computerSelection == "Scissors") {
 
-        return "You Win! Rock beats Scissors";
+        results.textContent = "You Win! Rock beats Scissors";
     }
     if (playerSelection == "paper" && computerSelection == "Rock") {
 
-        return "You win! Paper beats Rock";
+        results.textContent = "You win! Paper beats Rock";
     }
     if (playerSelection == "scissors" && computerSelection == "Paper") {
 
-        return "You win! Scissors beats Paper";
+        results.textContent = "You win! Scissors beats Paper";
     }
     if (playerSelection == "rock" && computerSelection == "Rock") {
 
-        return "Draw!"
+        results.textContent = "Draw!"
     }
     if (playerSelection == "paper" && computerSelection == "Paper") {
 
-        return "Draw!"
+        results.textContent = "Draw!"
     }
     if (playerSelection == "scissors" && computerSelection == "Scissors") {
 
-        return "Draw!"
+        results.textContent = "Draw!"
     }
 }
 
@@ -62,21 +84,11 @@ function game() {
     let computerScore = 0;
     let playerScore = 0;
 
-    console.log("Welcome to a 5 round game of Rock, Paper, Scissors! Good luck and have fun!");
-
-    for (let i = 0; i < 5; i++) {
-
-        const playerSelection = prompt("Please enter rock, paper, or scissors").toLowerCase();
-
+    rock.addEventListener('click', () => {
+        const computerSelection = getComputerChoice()
+        const playerSelection = 'rock';
+        finalWinner.textContent = '';
         if (playerSelection == "rock" && computerSelection == "Paper") {
-
-            computerScore++;
-        }
-        if (playerSelection == "paper" && computerSelection == "Scissors") {
-
-            computerScore++;
-        }
-        if (playerSelection == "scissors" && computerSelection == "Rock") {
 
             computerScore++;
         }
@@ -84,36 +96,75 @@ function game() {
 
             playerScore++;
         }
+        playRound(playerSelection, computerSelection);
+        score.textContent = 'Player Wins: ' +playerScore +' Computer Wins: ' +computerScore;
+        if (playerScore == 5) {
+            finalWinner.textContent = 'Congratulations you have have won!';
+            playerScore = 0;
+            computerScore = 0;
+        }
+        else if (computerScore == 5) {
+            finalWinner.textContent = 'You lost! Better luck next time!';
+            playerScore = 0;
+            computerScore = 0;
+        }
+    });
+
+    paper.addEventListener('click', () => {
+        const computerSelection = getComputerChoice()
+        const playerSelection = 'paper';
+        finalWinner.textContent = '';
+        if (playerSelection == "paper" && computerSelection == "Scissors") {
+
+            computerScore++;
+        }
         if (playerSelection == "paper" && computerSelection == "Rock") {
 
             playerScore++;
+        }
+        playRound(playerSelection, computerSelection);
+        score.textContent = 'Player Wins: ' +playerScore +' Computer Wins: ' +computerScore;
+        if (playerScore == 5) {
+
+            finalWinner.textContent = 'Congratulations you have have won!';
+            playerScore = 0;
+            computerScore = 0;
+        }
+        else if (computerScore == 5) {
+            finalWinner.textContent = 'You lost! Better luck next time!';
+            playerScore = 0;
+            computerScore = 0;
+        }
+    });
+
+    scissors.addEventListener('click', () => {
+        const computerSelection = getComputerChoice()
+        const playerSelection = 'scissors';
+        finalWinner.textContent = '';
+        if (playerSelection == "scissors" && computerSelection == "Rock") {
+
+            computerScore++;
         }
         if (playerSelection == "scissors" && computerSelection == "Paper") {
 
             playerScore++;
         }
+        playRound(playerSelection, computerSelection);
+        score.textContent = 'Player Wins: ' +playerScore +' Computer Wins: ' +computerScore;
+        if (playerScore == 5) {
 
-        console.log(playRound(playerSelection, computerSelection));
-    }
-
-    console.log("Final score is Player: " + playerScore, "Computer: " + computerScore);
-
-    if (computerScore > playerScore) {
-
-        return console.log("You have lost the game!");
-    }
-    else if (playerScore > computerScore) {
-
-        return console.log("You have won the game!");
-    }
-    else {
-
-        return console.log("The game has finished in a draw!");
-    }
+            finalWinner.textContent = 'Congratulations you have have won!';
+            playerScore = 0;
+            computerScore = 0;
+        }
+        else if (computerScore == 5) {
+            finalWinner.textContent = 'You lost! Better luck next time!';
+            playerScore = 0;
+            computerScore = 0;
+        }
+    });
 }
 
-
-const computerSelection = getComputerChoice();
 
 game();
 
